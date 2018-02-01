@@ -4,6 +4,20 @@
 
 
 # 使用方法
+## 添加依赖
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+ 
+ dependencies {
+	        compile 'com.github.lewis-v:FlowView:1.0.2'
+	}
+ ```
+## 布局添加
  ```
  <com.lewis_v.widget.viewflow.YWFlowViewPager
         android:id="@+id/viewpager"
