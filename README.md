@@ -2,6 +2,7 @@
 轮播ViewPager
 此控件对ViewPager循环轮播的实现进行封装,适用于一种View轮播及多种不同的View一起轮播,并在后期进行完善
 
+![这里写图片描述](http://img.blog.csdn.net/20180201231008421?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzg3MTMzOTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 # 使用方法
 ## 添加依赖
