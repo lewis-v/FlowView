@@ -24,7 +24,8 @@ allprojects {
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
 ```
- ## 初始化
+
+## 初始化
  ```
         flowview.setFlowView(imageViews);//添加显示的控件列表
         flowview.setFlowTime(3000);//设置轮播间隔ms,默认为5秒
