@@ -30,6 +30,7 @@ public class YWFlowViewPager extends ViewPager {
     private boolean isFlow = false;//是否在滚动
     private boolean isMove = false;//是否有触控移动,用于点击事件的判断
     private final Object lock = new Object();
+    private List<OnPageSelected> onPageSelecteds = new ArrayList<>();//页面切换监听组
     private OnPageClickListener onPageClickListener;
     private Point downPoint;//点击的坐标
 
@@ -104,6 +105,13 @@ public class YWFlowViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
+                if (onPageSelecteds!=null){
+                    for (OnPageSelected onPageSelected : onPageSelecteds){
+                        if (onPageSelected != null){
+                            onPageSelected.onSelected(position%list.size());
+                        }
+                    }
+                }
             }
 
             @Override
@@ -198,10 +206,21 @@ public class YWFlowViewPager extends ViewPager {
                 threadFlow = null;
             }
         }catch (Exception e){        }
+        clearAllPageSelectedListener();
     }
 
+    /**
+     * 页面点击的监听器
+     */
     public interface OnPageClickListener{
         void onPageClick(View view, int position);
+    }
+
+    /**
+     * 页面切换后的监听器
+     */
+    public interface OnPageSelected{
+        void onSelected(int position);
     }
 
     /**
@@ -265,6 +284,10 @@ public class YWFlowViewPager extends ViewPager {
         return this;
     }
 
+    public int getFlowPosition() {
+        return flowPosition;
+    }
+
     public YWFlowViewPager setAutoFlow(boolean autoFlow) {
         isAutoFlow = autoFlow;
         return this;
@@ -276,5 +299,47 @@ public class YWFlowViewPager extends ViewPager {
      */
     public int getPosition(){
         return getCurrentItem()%list.size();
+    }
+
+    public ArrayList<View> getList() {
+        return list;
+    }
+
+    public YWFlowViewPager setList(ArrayList<View> list) {
+        this.list = list;
+        return this;
+    }
+
+    /**
+     * 添加页面切换监听
+     * @param onPageSelected
+     * @return
+     */
+    public YWFlowViewPager addOnPageSelectedListener(OnPageSelected onPageSelected){
+        onPageSelecteds.add(onPageSelected);
+        return this;
+    }
+
+    /**
+     * 删除页面切换监听
+     * @param onPageSelected
+     * @return
+     */
+    public YWFlowViewPager removePageSelectedListener(OnPageSelected onPageSelected){
+        int index = onPageSelecteds.indexOf(onPageSelected);
+        if (index >= 0){
+            onPageSelecteds.remove(index);
+        }
+        return this;
+    }
+
+    /**
+     * 删除页面全部切换监听
+     */
+    public YWFlowViewPager clearAllPageSelectedListener(){
+        if (onPageSelecteds != null){
+            onPageSelecteds.clear();
+        }
+        return this;
     }
 }
