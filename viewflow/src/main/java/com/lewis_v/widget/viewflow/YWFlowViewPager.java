@@ -15,13 +15,13 @@ import java.util.List;
  * time: 2018/1/31.
  */
 
-public class YWFlowViewPager<T extends View> extends ViewPager {
+public class YWFlowViewPager extends ViewPager {
     private final int START_POSITION_DOUBLE = 500;
     private final int MAX_MOVE = 100;//超过这个值认为是移动了
 
     private boolean enabled = true;//是否可以手动滑动,不影响滚动
-    private YWFlowViewPagerAdapter<T> adapter;
-    private ArrayList<T> list = new ArrayList<>();
+    private YWFlowViewPagerAdapter<View> adapter;
+    private ArrayList<View> list = new ArrayList<>();
     private boolean isAutoFlow = true;//是否自动循环流动
     private FlowThread threadFlow;//滚动的线程
     private int flowTime = 5000;//滚动切换时间,默认3秒
@@ -227,7 +227,10 @@ public class YWFlowViewPager<T extends View> extends ViewPager {
      * 添加滚动控件
      * @param view
      */
-    public YWFlowViewPager addFlowView(T view){
+    public YWFlowViewPager addFlowView(View view){
+        if (list == null){
+            list = new ArrayList<>();
+        }
         list.add(view);
         return this;
     }
@@ -237,7 +240,7 @@ public class YWFlowViewPager<T extends View> extends ViewPager {
      * @param list
      * @return
      */
-    public YWFlowViewPager setFlowView(ArrayList<T> list){
+    public YWFlowViewPager setFlowView(ArrayList<View> list){
         this.list = list;
         return this;
     }
