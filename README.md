@@ -1,12 +1,31 @@
 # FlowView
 轮播ViewPager
-此控件对ViewPager循环轮播的实现进行封装,方便后续使用,并在后期进行完善
+此控件对ViewPager循环轮播的实现进行封装,适用于一种View轮播及多种不同的View一起轮播,并在后期进行完善
 
 
 # 使用方法
+## 添加依赖
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+		}
+	}
+ 
+ dependencies {
+	compile 'com.github.lewis-v:FlowView:1.0.2'
+	}
+ ```
+## 布局添加
+ ```
+ <com.lewis_v.widget.viewflow.YWFlowViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+```
 
-
- ## 初始化
+## 初始化
  ```
         flowview.setFlowView(imageViews);//添加显示的控件列表
         flowview.setFlowTime(3000);//设置轮播间隔ms,默认为5秒
@@ -34,3 +53,5 @@
         viewpager.pause();
     }
 ```
+ 
+## 若有问题请向作者反馈:(605788229@qq.com)
