@@ -6,15 +6,15 @@
 # 使用方法
 ## 添加依赖
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 		}
 	}
  
  dependencies {
-	        compile 'com.github.lewis-v:FlowView:1.0.2'
+	compile 'com.github.lewis-v:FlowView:1.0.2'
 	}
  ```
 ## 布局添加
