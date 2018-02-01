@@ -21,7 +21,7 @@ public class YWFlowViewPager<T extends View> extends ViewPager {
 
     private boolean enabled = true;//是否可以手动滑动,不影响滚动
     private YWFlowViewPagerAdapter<T> adapter;
-    private List<T> list = new ArrayList<>();
+    private ArrayList<T> list = new ArrayList<>();
     private boolean isAutoFlow = true;//是否自动循环流动
     private FlowThread threadFlow;//滚动的线程
     private int flowTime = 5000;//滚动切换时间,默认3秒
@@ -237,7 +237,7 @@ public class YWFlowViewPager<T extends View> extends ViewPager {
      * @param list
      * @return
      */
-    public YWFlowViewPager setFlowView(List<T> list){
+    public YWFlowViewPager setFlowView(ArrayList<T> list){
         this.list = list;
         return this;
     }
