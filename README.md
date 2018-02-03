@@ -15,7 +15,7 @@ allprojects {
 	}
  
  dependencies {
-	compile 'com.github.lewis-v:FlowView:1.0.3'
+	compile 'com.github.lewis-v:FlowView:1.0.4'
 	}
  ```
 # YWFlowViewPager 循环滚动控件
