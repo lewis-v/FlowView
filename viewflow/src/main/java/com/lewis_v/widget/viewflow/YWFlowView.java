@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class YWFlowView extends FrameLayout {
     private YWFlowViewPager flowViewPager;
     private LinearLayout ll_point;
-    private int pointResFocus = R.drawable.circle_red_focus,pointResUnFocus = R.drawable.circle_red_un_focus;
+    private int pointResFocus = R.drawable.circle_focus,pointResUnFocus = R.drawable.circle_un_focus;
     private int pointWidth = 40,pointHeight = 40;//圆点的大小,默认为40*40
     private int pointMargins = 15;//圆点间隔,默认15
 

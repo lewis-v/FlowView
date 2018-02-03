@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -23,7 +24,6 @@ public class YWFlowViewPager extends ViewPager {
     private YWFlowViewPagerAdapter<View> adapter;
     private ArrayList<View> list = new ArrayList<>();
     private boolean isAutoFlow = true;//是否自动循环流动
-    private FlowThread threadFlow;//滚动的线程
     private int flowTime = 5000;//滚动切换时间,默认3秒
     private int flowPosition = 0;//目前所在的位置,默认一开始在0,列表位置
     private boolean isPause = false;//是否停止轮播
@@ -126,52 +126,33 @@ public class YWFlowViewPager extends ViewPager {
             }
         });
         setCurrentItem(flowPosition*START_POSITION_DOUBLE);
-        initRunThread();
+        run();
     }
 
     /**
-     * 启动滚动线程
+     * 延时滚动
      */
-    private void initRunThread(){
-        if (threadFlow != null){
-            threadFlow.interrupt();
-        }
-        threadFlow = new FlowThread();
-        threadFlow.start();
-    }
-
-    /**
-     * 滚动线程
-     */
-    class FlowThread extends Thread{
-        @Override
-        public void run() {
-            while (true){
-                try {
-                    sleep(flowTime);
-                } catch (InterruptedException e) {
-                    return;
-                }
+    public void run(){
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 if (isAutoFlow) {
                     //多次同步,只是为了不在用户滑动时自动滚动
                     if (!isPause && !isFlow) {
-                        post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!isPause && !isFlow) {
-                                    synchronized (lock) {
-                                        if (!isPause && !isFlow) {
-                                            setCurrentItem(getCurrentItem() + 1);
-                                        }
-                                    }
-                                }
+                        synchronized (lock) {
+                            if (!isPause && !isFlow) {
+                                setCurrentItem(getCurrentItem() + 1);
                             }
-                        });
+                        }
                     }
                 }
+                Log.e("run","end");
+                YWFlowViewPager.this.run();
             }
-        }
+        },flowTime);
     }
+
+
 
     /**
      * 暂停轮播,建议在onPause调用
@@ -188,9 +169,6 @@ public class YWFlowViewPager extends ViewPager {
     public void resume(){
         synchronized (lock) {
             isPause = false;
-            if (threadFlow ==null || threadFlow.isAlive()){//若恢复时,由于低内存原因,线程被回收了,重新开启(一般不会出现这情况)
-                initRunThread();
-            }
         }
     }
 
@@ -200,12 +178,6 @@ public class YWFlowViewPager extends ViewPager {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        try {
-            if (threadFlow != null && threadFlow.isAlive()) {
-                threadFlow.interrupt();
-                threadFlow = null;
-            }
-        }catch (Exception e){        }
         clearAllPageSelectedListener();
     }
 

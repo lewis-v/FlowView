@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="viewpager_point_back">#3fffffff</color>
+    <color name="viewpager_point_back">#00000000</color>
 </resources>
